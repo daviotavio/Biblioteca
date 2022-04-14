@@ -1,6 +1,9 @@
+using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.Collections;
+using System.Globalization;
+using System.Threading;
 
 namespace Biblioteca.Models
 {
@@ -29,23 +32,23 @@ namespace Biblioteca.Models
       }
     }
 
-    public ICollection<Livro> ListarTodos(FiltrosLivros filtro = null)
+    public ICollection<Livro> ListarTodos(int pagina = 1, int tamanho = 10, FiltrosLivros filtro = null)
     {
       using (BibliotecaContext bc = new BibliotecaContext())
       {
         IQueryable<Livro> query;
-
+        int pular = (pagina - 1) * tamanho;
         if (filtro != null)
         {
           //definindo dinamicamente a filtragem
           switch (filtro.TipoFiltro)
           {
             case "Autor":
-              query = bc.Livros.Where(l => l.Autor.Contains(filtro.Filtro));
+              query = bc.Livros.Where(l => l.Autor.Contains(filtro.Filtro, StringComparison.CurrentCultureIgnoreCase));
               break;
 
             case "Titulo":
-              query = bc.Livros.Where(l => l.Titulo.Contains(filtro.Filtro));
+              query = bc.Livros.Where(l => l.Titulo.Contains(filtro.Filtro, StringComparison.CurrentCultureIgnoreCase));
               break;
 
             default:
@@ -60,7 +63,7 @@ namespace Biblioteca.Models
         }
 
         //ordenação padrão
-        return query.OrderBy(l => l.Titulo).ToList();
+        return query.OrderBy(l => l.Titulo).Skip(pular).Take(tamanho).ToList();
       }
     }
 
@@ -82,6 +85,14 @@ namespace Biblioteca.Models
       using (BibliotecaContext bc = new BibliotecaContext())
       {
         return bc.Livros.Find(id);
+      }
+    }
+
+    public int NumeroDeLivros()
+    {
+      using (var context = new BibliotecaContext())
+      {
+        return context.Livros.Count();
       }
     }
   }
