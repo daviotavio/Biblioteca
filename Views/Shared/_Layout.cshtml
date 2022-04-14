@@ -1,5 +1,6 @@
 ﻿<!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,26 +8,55 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
+
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow mb-3">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Biblioteca</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-light" href="/Livro/Cadastro" id="menuLivros">Livros</a>
+                    <ul class="navbar-nav w-100 align-items-center flex-grow-1">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link text-light dropdown-toggle" data-toggle="dropdown" href="#">Livros</a>
+                            <div class="dropdown-menu" aria-labelledby="menuLivros">
+                                <a class="dropdown-item" href="/Livro/Cadastro" id="menuLivros">Cadastro</a>
+                                <a class="dropdown-item" href="/Livro/Listagem">Listagem</a>
+                            </div>
+
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link text-light dropdown-toggle" data-toggle="dropdown" href="#">Emprestimo</a>
+                            <a class="nav-link text-light dropdown-toggle" data-toggle="dropdown"
+                                href="#">Emprestimo</a>
                             <div class="dropdown-menu" aria-labelledby="menuLivros">
-                                <a class="dropdown-item" href="/Emprestimo/Listagem">Listagem</a>
                                 <a class="dropdown-item" href="/Emprestimo/Cadastro">Cadastro</a>
+                                <a class="dropdown-item" href="/Emprestimo/Listagem">Listagem</a>
+
                             </div>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link text-light dropdown-toggle" data-toggle="dropdown" id="menuUsuarios"
+                                href="#">Usuários</a>
+                            <div class="dropdown-menu" aria-labelledby="menuLivros">
+                                <a class="dropdown-item" href="/Usuario/RegistrarUsuarios">Cadastro</a>
+                                <a class="dropdown-item" href="/Usuario/ListaDeUsuarios">Listagem</a>
+
+                            </div>
+                        </li>
+
+                        <li class="nav-item ml-auto">
+                            <a class="nav-link text-light" href="/Usuario/Sair" id="menuLivros"><svg
+                                    xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    class="bi bi-box-arrow-right" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd"
+                                        d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z" />
+                                    <path fill-rule="evenodd"
+                                        d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z" />
+                                </svg>&nbsp;Logout</a>
                         </li>
                     </ul>
                 </div>
@@ -51,4 +81,5 @@
 
     @RenderSection("Scripts", required: false)
 </body>
+
 </html>

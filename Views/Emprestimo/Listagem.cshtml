@@ -1,8 +1,9 @@
-@model ICollection<Emprestimo>
+@model List<Emprestimo>
 @{
-    ViewData["Title"] = "Listagem de Empréstimos";
-}
+    ViewData["Title"] = "Listagem de Livros";
 
+    string Classe = "";
+}
 <div class="row">
     <div class="col-md-12">
         <form class="form-inline" method="POST">
@@ -15,7 +16,8 @@
             <div class="form-group mb-2 mx-sm-3">
                 <input type="text" placeholder="Filtro" name="Filtro" class="form-control" />
             </div>
-            <button type="submit" class="btn btn-primary mb-2">Pesquisar</button>
+            <button type="submit" class="btn btn-primary mb-2 ">Pesquisar</button>
+
         </form>
     </div>
 </div>
@@ -26,26 +28,42 @@
         {
             <table class="table table-striped">
                 <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>Usuario</th>
-                        <th>Data Empréstimo</th>
-                        <th>Data Devolução</th>
-                        <th>Livro</th>
-                        <th>Autor</th>
-                        <th></th>
+                    <tr class="table-sucess">
+                        <th scope="col">Id</th>
+                        <th scope="col">Usuario</th>
+                        <th scope="col">Data Empréstimo</th>
+                        <th scope="col">Data Devolução</th>
+                        <th scope="col">Livro</th>
+                        <th scope="col">Autor</th>
+                        <th scope="col"></th>
+
+
                     </tr>
                 </thead>
                 <tbody>
+
                     @foreach (Emprestimo e in Model)
                     {
-                        <tr>
+                        @if (System.DateTime.Compare(System.DateTime.Now, e.DataDevolucao) > 0)
+                        {
+                            Classe = "text-danger";
+                            if (@e.Devolvido == true)
+                            {
+                                Classe = "text-primary";
+                            }
+                        }
+                        else
+                        {
+                            Classe = "";
+                        }
+                        <tr class="@Classe">
                             <td>@e.Id</td>
                             <td>@e.NomeUsuario</td>
-                            <td>@e.DataEmprestimo.ToString("dd/MM/yyyy")</td>
-                            <td>@e.DataDevolucao.ToString("dd/MM/yyyy")</td>
+                            <td>@e.DataEmprestimo</td>
+                            <td>@e.DataDevolucao</td>
                             <td>@e.Livro.Titulo</td>
                             <td>@e.Livro.Autor</td>
+
                             <td><a href="/Emprestimo/Edicao/@e.Id">Editar</a></td>
                         </tr>
                     }
@@ -54,7 +72,11 @@
         }
         else
         {
-            <p>Nenhum registro encontrado</p>
+            <p class="text=center">Nenhum registro encontrado.</p>
+        }
+        @for (int i = 1; i <= (int)ViewData["NroPaginas"]; i++)
+        {
+            <a class="btn btn-primary" href="Listagem?p=@i">Página @i</a>
         }
     </div>
 </div>
